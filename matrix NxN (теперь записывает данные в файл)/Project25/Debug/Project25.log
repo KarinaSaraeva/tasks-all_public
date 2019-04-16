@@ -1,0 +1,4 @@
+﻿  Source.cpp
+c:\users\karin\source\repos\project25\project25\source.cpp(71): warning C4244: +=: преобразование "double" в "int", возможна потеря данных
+c:\users\karin\source\repos\project25\project25\source.cpp(116): warning C4715: inverse_matrix: значение возвращается не при всех путях выполнения
+  Project25.vcxproj -> C:\Users\Karin\source\repos\Project25\Debug\Project25.exe
