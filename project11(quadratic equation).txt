@@ -1,0 +1,71 @@
+#include <stdio.h>
+
+#include <math.h>
+
+
+
+double Discr(float a, float b, float c) {
+
+	return(b*b - 4 * a*c);
+	
+}
+
+void main() {
+
+	double a, b, c;
+
+	scanf_s("%lf%lf%lf", &a, &b, &c);
+
+	double D = Discr(a, b, c);
+
+	printf("D=%lf\n", D);
+
+
+
+	if (a == 0 && b != 0)
+
+	{
+		printf("x=%lf\n", (-1)*(c / b));
+
+		int x;
+
+		scanf_s("%d", &x);
+
+	}
+
+	else if (D < 0)
+
+	{	double realx, imagx;
+
+		realx = (-b) / (2 * a);
+
+		imagx = sqrt((-1)*D) / (2 * a);
+
+		printf("x1=%lf+i%lf\n", realx, imagx);
+
+		printf("x2=%lf-i%lf\n", realx, imagx);
+
+		int x;
+
+		scanf_s("%d", &x);
+
+	}
+
+	else {
+
+		double x1, x2;
+
+		x1 = (-b + sqrt(D)) / (2 * a);
+
+		x2 = (-b - sqrt(D)) / (2 * a);
+		
+		printf("x1=%lf\n", x1);
+		printf("x2=%lf\n", x2);
+
+		int x;
+
+		scanf_s("%d", &x);
+
+	}
+
+}

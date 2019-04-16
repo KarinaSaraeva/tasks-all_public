@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <math.h>
+#include <conio.h>
+#define NO 0
+
+
+	double term(int currentnumber) {
+		return 4*(double)pow(-1.0, currentnumber)/((2.0 * currentnumber) + 1.0);
+	}																			
+
+int main()
+{
+	int answer;
+	double n, eps;
+	do {
+    
+		printf("n = ");
+		scanf_s("%lf", &n);
+		double pi_previous, pi_new;
+		eps = pow(10, (-1)*(n+1));
+
+
+		int currentnumber;
+		currentnumber = 0;
+		pi_previous = pi_new = 0;
+		printf("calculating\n");
+
+		printf(" eps= %lf", eps);
+		do {
+			pi_previous = pi_new;
+			pi_new += term(currentnumber);
+			currentnumber++;
+		}
+
+		while (fabs(pi_previous - pi_new) >= eps);
+		int k = (int)(pi_new*pow(10, n));
+		pi_new = (double)k*pow(10, (-1)*n);
+		printf(" pi = %lf\n", pi_new);
+		printf("do you whant to continue?\n answer=");
+			scanf_s("%answer", &answer);
+			if (answer == NO) break;
+	} while (true);
+	_getch();
+
+	return 0;
+}

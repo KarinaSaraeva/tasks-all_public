@@ -1,0 +1,35 @@
+#include <stdio.h>
+
+#include <conio.h>
+
+#include <math.h>
+
+int main()
+
+{
+
+printf("N=");
+
+int maximum_number;
+
+scanf_s("%i", &maximum_number);
+
+for (int number = 0; number <= maximum_number; number++) {
+
+int primal = 1;
+
+for (int i = 2; i*i <= number; i++) {
+
+if (number%i == 0) primal=0;
+
+}
+
+if (primal == 0) printf("%i\n", number);
+
+}
+
+_getch();
+
+return 0;
+
+}

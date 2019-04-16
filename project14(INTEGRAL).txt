@@ -1,0 +1,38 @@
+#include <stdio.h> 
+#include <math.h> 
+#include <conio.h> 
+
+double func(double x) {
+	return x - sin(x) - 25;
+}
+
+int main()
+{
+	double a, b, N, INTEGRAL, step;
+	printf("enter values a b N\n");
+	scanf_s("%lf%lf%lf", &a, &b, &N);
+	step = fabs((a - b) / N);
+	INTEGRAL = 0;
+	printf("a=%lf,b=%lf,step=%lf\n", a, b, step);
+	double x_previous, x_new;
+	if (func(b) < func(a)) {
+		x_previous = a;
+		x_new = a;
+	}
+	else {
+		x_previous = b;
+		x_new = b;
+	}
+	do {
+		x_previous = x_new;
+		x_new -=step;
+		INTEGRAL += fabs(func(x_previous) - func(x_new));
+
+	}
+
+	while ((x_previous) >= a);
+	printf("approximated value of INTEGRAL = %lf", INTEGRAL);
+	_getch();
+
+	return 0;
+}

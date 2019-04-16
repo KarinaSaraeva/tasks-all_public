@@ -1,0 +1,50 @@
+#include <stdio.h> 
+#include <math.h> 
+#include <conio.h> 
+#include <stdlib.h>
+int flag;
+
+void replace(int *pX,int *pY) {
+	int temp;
+	temp = *pX;
+	*pX = *pY;
+	*pY = temp;
+}
+void compare(int *pX, int *pY) {
+	if (*pX > *pY) { replace(pX, pY); flag = 1; }
+}
+void output_array(int *pArr, int N) {
+	for (int i = 0; i < N; ++i)
+		printf("%3d", *(pArr + i));
+	printf("\n");
+}
+int main() {
+	int N;
+	printf("Input elements count: ");
+	scanf_s("%d", &N);
+	printf("enter data\n");
+	int *pArr = (int *)malloc(sizeof(int)*N);
+	if (pArr == NULL)
+	{
+		printf("Can’t allocate memory!");
+	}
+	for (int i = 0; i < N; i++)
+		scanf_s("%d", (pArr + i));
+	replace(&*(pArr), &*(pArr + 1));
+	output_array(pArr, N);
+
+	for (int i = 0; i < N; i++) {
+		flag = 0;
+		for (int j = 0; j < N - i - 1 ; j++) {
+			printf("%5d%5d\n",*(pArr + j),*(pArr+j+1));
+			compare(&*(pArr+j),&*(pArr+j+1));
+			}
+			if (flag == 0) break;
+		}
+	
+	output_array(pArr, N);
+	_getch();
+
+	return 0;
+	}
+			
