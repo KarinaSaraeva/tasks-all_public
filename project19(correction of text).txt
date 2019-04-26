@@ -1,0 +1,91 @@
+#include <stdio.h> 
+#include <math.h> 
+#include <conio.h> 
+#include <malloc.h> 
+
+int delete_left_passage(char *str, int n, int N) {
+	for (int i = n; i < N - 1; i++)
+		str[i] = str[i + 1];
+	str = (char *)realloc(str, N - 1);
+	return (N - 1);//здесь нужно уменьшать размер массива текущего на один
+}
+int put_right_passage(char *str, int n, int N) {
+	int i;//здесь увеличивать
+	str = (char *)realloc(str, N + 1);
+	for (i = N + 1; i > n; i = i - 1)
+		*(str + i) = *(str + i - 1);
+	*(str + n) = ' ';
+	return (N + 1);
+}
+
+
+void change_registr(char *str, int n) {
+	*(str + n) -= 32;
+
+}
+
+int main(void) {
+	int N = 20;
+	char *str;
+	char *res;
+	str = (char*)malloc(N * sizeof(char));
+	res = (char*)malloc(N * sizeof(char));
+
+	printf("Enter string: ");
+	fgets(str, N, stdin);
+	fflush(stdin);
+	printf("Your string: ");
+	puts(str);
+	int i, j;
+	j = 0;
+	for (i = 0; i < N; i++) {
+		if (str[i] != ' ') {
+			res[j] = str[i];
+			j++;
+		}
+		else {
+			/*if (str[i + 1] == ' ')
+			continue;*/
+			res[j] = ' ';
+			j++;
+			while ((str[i + 1] == ' ') && (i++ < N)) i++;
+		}
+	}
+	N = j;
+
+	res = (char *)realloc(res, N);
+	for (int i = 0; i < N; i++) {
+		if (res[i] >= 'A' && res[i] <= 'Z')
+			res[i] = res[i] + 32;
+	}
+	if (*(res) >= 'a' && *(res) <= 'z') {
+		change_registr(res, 0);
+	}
+	for (int i = 0; i < N - 1; i++) {
+		if ((*(res + i) == '.' || *(res + i) == ',' || *(res + i) == '-') && *(res + i + 1) != ' ') {
+			N = put_right_passage(res, i + 1, N);
+			//добавить пробел 
+		}
+	}
+
+	for (int i = 1; i < N; i++) {
+		if ((*(res + i) == '.' || *(res + i) == ',') && *(res + i - 1) == ' ') N = delete_left_passage(res, i - 1, N);
+	}
+	for (int i = 1; i < N; i++) {
+		if (*(res + i) == '-'&& *(res + i - 1)!=' ')  {
+			N = put_right_passage(res, i, N);
+		}
+	}
+
+	for (int i = 0; i < N - 1; i++) {
+		if (*(res + i) == '.') {
+			if (i + 2 < N) {
+				change_registr(res, i + 2);
+			}
+		}
+	}
+
+	puts(res);
+	_getch();
+	return 0;
+}
