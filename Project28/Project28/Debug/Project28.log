@@ -1,0 +1,4 @@
+﻿  Source.cpp
+c:\users\karin\source\repos\project28\project28\source.cpp(20): warning C4715: compare_UP_DOWN: значение возвращается не при всех путях выполнения
+c:\users\karin\source\repos\project28\project28\source.cpp(23): warning C4715: compare_ABSOLUTE_VALUE: значение возвращается не при всех путях выполнения
+  Project28.vcxproj -> C:\Users\Karin\source\repos\Project28\Debug\Project28.exe
