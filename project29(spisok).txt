@@ -1,0 +1,162 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+#include <conio.h>
+#include <malloc.h>
+int number_of_people;
+typedef struct date_1
+{
+	int day;
+	int month;
+	int year;
+}date_1;
+
+typedef struct person_1 {
+	char firstname[20];
+	char lastname[20];
+	char tel_number[11];
+	date_1 bd;
+}person_1;
+
+typedef struct people_1 {
+	int number;
+	person_1 p;
+	people_1 *pnext;
+}people_1;
+
+void create_person(person_1* p) {
+
+
+	printf("Enter name: ");
+	scanf("%s", (*p).firstname);
+	printf("Enter surname: ");
+	scanf("%s", (*p).lastname);
+	printf("Enter telephone number: ");
+	scanf("%s", (*p).tel_number);
+	printf("Enter birthday\nDay: ");
+	scanf("%d", &(*p).bd.day);
+	printf("Month: ");
+	scanf("%d", &(*p).bd.month);
+	printf("Year: ");
+	scanf("%d", &(*p).bd.year);
+
+}
+void print_person(person_1* p) {
+	puts((*p).firstname);
+	puts((*p).lastname);
+	puts((*p).tel_number);
+	printf("%d", (*p).bd.day);
+	printf("%d", (*p).bd.month);
+	printf("%d", (*p).bd.year);
+}
+
+
+people_1 *create_people(people_1 **phead) {
+	
+	people_1 *pnew;
+	
+
+
+	int i = 0;
+	while (true) {
+		pnew = (people_1*)malloc(sizeof(people_1));//pnew временная переменная
+		i++;
+		(*pnew).number = i;
+		create_person(&(*pnew).p);
+
+		(*pnew).pnext = *phead;//следующий равен NULL
+		(*phead) = pnew;
+		//&&&???уничтожение временной переменной
+		number_of_people = i;
+		printf("another one?");
+		int answer;
+		scanf_s("%d", &answer);
+
+		if (answer == 0) { break; }
+
+	}
+	
+	return *phead;//pbegin это конец :( как найти начало? это необходимо для вывода
+}
+
+
+people_1 *change_direct(people_1 **pbegin) {
+	//удаляем элементы из начала предыдущего списка, формируем новый список с этими элементами 
+	people_1 *date = (people_1*)malloc(sizeof(people_1));
+	people_1 *pnew;
+	people_1 *pbegin_new = NULL;
+	
+	date = *pbegin;
+	int i=number_of_people;
+	 do {
+		pnew = (people_1*)malloc(sizeof(people_1));//pnew временная переменная
+		(*pnew).number = i;
+		i=i-1;
+		pnew->p = date->p;
+		pnew->pnext = pbegin_new;
+		pbegin_new = pnew;//каждый предыдущий указывает на последующий, pbegin хранит последний записанный, он указывает на все предыдущие
+		
+		
+		date = (*date).pnext;
+		
+	 } while (date != NULL);
+	 return pbegin_new;
+}
+
+
+void insert(people_1 *head, int n) {
+	int i = 0;
+	people_1 *tmp = NULL;
+	while (i <= n && head->pnext) {
+		head = head->pnext;
+		i++;
+	}
+	tmp = (people_1*)malloc(sizeof(people_1));
+	create_person(&tmp->p);
+	tmp->number = i;
+	if (head->pnext) {
+		tmp->pnext = head->pnext;
+	}
+	else {
+		tmp->pnext = NULL;
+	}
+	head->pnext = tmp;
+}
+
+
+
+void print_list(people_1 *pbegin) {
+	people_1 * pCur = NULL;
+	if (pbegin == NULL)
+	{
+		printf("No elements\n");
+
+	}
+	pCur = pbegin;
+	do
+	{
+		printf("%d\n", pCur->number);
+		print_person(&pCur->p);
+		pCur = pCur->pnext;
+		printf("\n");
+	} while (pCur != NULL);
+
+
+}
+
+int main() {
+	people_1 *begin = NULL;
+	begin = create_people(&begin);
+	print_list(begin);
+	printf(" New direction:\n");
+	print_list(change_direct(&begin));
+	int n;
+	printf("add element n= \n");
+	scanf("%d", &n);
+	insert(begin, n);
+	print_list(begin);
+
+	printf("end of compilation");
+	_getch();
+	return 0;
+}
